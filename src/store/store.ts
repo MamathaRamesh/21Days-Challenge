@@ -23,5 +23,13 @@ export const store = configureStore({
   preloadedState: loadState(),
 });
 
+store.subscribe(() => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(store.getState().tracker));
+  } catch (err) {
+    console.error('Could not save state', err);
+  }
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
